@@ -10,6 +10,9 @@ public class PlayerScript : MonoBehaviour {
 	private int playerLives;
 	private int playerPoints;
 
+	public AudioClip pointSound;
+	public AudioClip lifeSound;
+
 	// Use this for initialization
 	void Start () {
 
@@ -43,11 +46,44 @@ public class PlayerScript : MonoBehaviour {
 
 		transform.position = playerPosition;
 
+		WinLose ();
+
 	}
 
 	void addPoints(int points){
 
 		playerPoints += points;
+		audio.PlayOneShot (pointSound);
+	}
+
+	void TakeLife(){
+
+		playerLives--;
+		audio.PlayOneShot (lifeSound);
+	}
+
+	void OnGUI(){
+
+		GUI.Label (new Rect (5.0f, 3.0f, 200.0f, 200.0f), 
+		           "Live's: " + playerLives + " Score: " + playerPoints);
+
+	}
+
+	void WinLose(){
+		// restart the game
+		if (playerLives == 0) {
+			Application.LoadLevel("Level1");        
+		}
+
+		if ((GameObject.FindGameObjectsWithTag ("Block")).Length == 0) {
+			// check the current level
+			if (Application.loadedLevelName == "Level1") {
+				Application.LoadLevel("Level2");
+			} else {
+				Application.Quit();
+			}
+		}
+
 	}
 
 }

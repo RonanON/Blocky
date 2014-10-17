@@ -9,6 +9,8 @@ public class BallScript : MonoBehaviour {
 
 	public GameObject playerObject;
 
+	public AudioClip hitSound;
+
 	// Use this for initialization
 	void Start () {
 
@@ -52,6 +54,19 @@ public class BallScript : MonoBehaviour {
 			transform.position = ballPosition;
 
 			rigidbody2D.isKinematic = true;
+
+			GameObject player = GameObject.FindGameObjectsWithTag ("Player")[0];
+			
+			player.SendMessage ("TakeLife");
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D collision){
+
+		if (ballIsActive) {
+
+			audio.PlayOneShot(hitSound);
+
 		}
 	}
 }

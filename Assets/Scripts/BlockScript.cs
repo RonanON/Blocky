@@ -27,7 +27,7 @@ public class BlockScript : MonoBehaviour {
 
 			if(numberOfHits == hitsToKill){
 
-				GameObject player = GameObject.FindGameObjectsWithTag ("Player");
+				GameObject player = GameObject.FindGameObjectsWithTag ("Player")[0];
 
 				player.SendMessage ("addPoints", points);
 
